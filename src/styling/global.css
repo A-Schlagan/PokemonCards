@@ -1,0 +1,82 @@
+body {
+    margin: 30px;
+    font-family: Arial, sans-serif;
+    background-color: #798a8f6b;
+}
+
+h1 {
+    color: #333;
+}
+
+.search {
+    padding: 10px; 
+    width: 100%; 
+    margin-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: #f5ebebe1;
+    border: 2px solid #866969;
+}
+
+.pokemon-list { 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.pokemon-card {
+  background-color: rgba(198, 219, 179, 0.288);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+  width: 180px;
+  padding: 16px;
+  text-align: center;
+  margin: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  border: 2px solid #866969;
+  position: relative;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25); 
+}
+
+.image-frame {
+  position: relative; 
+  border: 2px solid #c4a2a2;
+  border-radius: 12px;
+  padding: 10px;
+  display: inline-block;
+  background-color: #f3d3d377;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.image-frame img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease; 
+}
+
+.image-frame:hover img {
+  transform: scale(1.1); 
+}
+
+.like-btn {
+  display: inline-block; 
+  margin-top: 5px;       
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.like-btn:hover {
+  transform: scale(1.3); 
+  color: red; 
+}
