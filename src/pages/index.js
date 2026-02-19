@@ -1,24 +1,15 @@
-//System
 import React, { Component } from "react";
-
-//Components
 import PokemonCard from "../components/pokemonCard";
-
-//Styling
 import "../styling/global.css";
+import PokemonSelector from "../components/dropdown";
 
 class Index extends Component {
-  //pokemons = [
-    // { name: "Pikachu", type: "Elektro" },
-    // { name: "Glumanda", type: "Feuer" },
-    // { name: "Bisasam", type: "Pflanze" }
-  //]
-
 
   constructor(props) {
     super(props);
     this.state = {
       searchTerm: "",
+      selectedType: "Alle",
       likes: {},
       pokemons: []
     };
@@ -44,8 +35,8 @@ class Index extends Component {
 
         return{
           name: detailsData.name,
-          type: detailsData.types[0].type.name, // erster Typ
-          image: detailsData.sprites.front_default // Bild-URL
+          type: detailsData.types[0].type.name, 
+          image: detailsData.sprites.front_default 
         };
       })
     )
@@ -69,6 +60,10 @@ class Index extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
+  handleTypeChange = (type) => {
+    this.setState({ selectedType: type });
+  };
+
   toggleLike = (name) => {
     this.setState(prevState => ({
       likes: {
@@ -80,25 +75,35 @@ class Index extends Component {
 
 
   render() {
-    console.log("render aufgerufen")
-    const filteredPokemons = this.state.pokemons.filter(pokemon =>
-      pokemon.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
-      pokemon.type.toLowerCase().includes(this.state.searchTerm.toLowerCase())
-    );
+    const uniqueTypes = ["Alle", ...new Set(this.state.pokemons.map(p => p.type))];
+    const filteredPokemons = this.state.pokemons.filter((pokemon) => {
+      const matchesName = pokemon.name.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+      const matchesType = this.state.selectedType === "Alle" || pokemon.type === this.state.selectedType;
 
-
+      return matchesName && matchesType;
+    });
 
     return (
       <div>
         <h1>Pokedex</h1>
 
-        <input
-          className="search"
-          type="text"
-          placeholder="Suche nach Name oder Typ..."
-          value={this.state.searchTerm}
-          onChange={this.handleSearchChange}
-        />
+        <div className="search-container">
+          <input
+            className="search"
+            type="text"
+            placeholder="Suche nach Name..."
+            value={this.state.searchTerm}
+            onChange={this.handleSearchChange}
+          />
+
+          <PokemonSelector onChange={this.handleTypeChange}>
+            {uniqueTypes.map((type) => (
+              <option key={type} value={type}>
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </option>
+            ))}
+          </PokemonSelector>
+        </div>
 
         <div className="pokemon-list">
 

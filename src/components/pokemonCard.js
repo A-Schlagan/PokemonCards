@@ -1,3 +1,4 @@
+// pokemonCard.js
 import React, { Component } from "react";
 import "../styling/global.css";
 
