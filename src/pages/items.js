@@ -2,6 +2,7 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import ItemTable from "../components/ItemTable"
+import PokemonSelector from "../components/dropdown"
 
 /*
 Seite soll sich der Pokemon-API bedienen, über einen entsprechenden node alle items ziehen
@@ -18,12 +19,20 @@ export default class Items extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: []
+            items: [],
+            limit: 20
         }
     }
 
+    onSelectHandle = (newLimit) => {
+        this.setState({ limit: newLimit }, () => {
+            this.fetchItems();
+        });
+    }
+
     fetchItems = async () => {
-        const url = "https://pokeapi.co/api/v2/item?limit=20"
+        const { limit } = this.state;
+        const url = `https://pokeapi.co/api/v2/item?limit=${limit}`;
         const response = await fetch(url)
         const data = await response.json()
 
@@ -73,10 +82,8 @@ export default class Items extends Component {
             const detailData = await detailResponse.json()
             let effectText = "Kein Effekt hinterlegt";
             if (detailData.effect_entries && detailData.effect_entries.length > 0) {
-                effectText = detailData.effect_entries[0].short_effect || detailData.effect_entries[0].effect;
+                effectText = detailData.effect_entries[1].short_effect || detailData.effect_entries[1].effect;
             }
-
-
 
             return {
                 name: detailData.name,
@@ -88,9 +95,7 @@ export default class Items extends Component {
         })
         const itemsWithDetails = await Promise.all(detailInfos)
         this.setState({ items: itemsWithDetails })
-
     }
-
 
     componentDidMount() {
         this.fetchItems()
@@ -102,10 +107,17 @@ export default class Items extends Component {
             <div>
                 <h1>Items-Page</h1>
                 <p>Verlinkung zurück zur Startseite (=index.js)</p>
-                <Link to="/">Startseite</Link>
+                <div style={{ marginBottom: "20px" }}>
+                    <Link to="/">
+                        <button className="button" >Startseite</button>
+                    </Link>
+                </div>
+                <PokemonSelector onChange={this.onSelectHandle}>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </PokemonSelector>
                 <ItemTable items={items} />
-
-
             </div>
         )
     }

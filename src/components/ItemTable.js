@@ -9,6 +9,7 @@ const ItemTable = ({ items }) => {
         <table className="table-items">
             <thead className="table-items-hd">
                 <tr>
+                    <th>Nr.</th>
                     <th>Item</th>
                     <th>Kategorie</th>
                     <th>Effekt</th>
@@ -19,6 +20,7 @@ const ItemTable = ({ items }) => {
                 {items.map((item, index) => {
                     return (
                         <tr key={index}>
+                            <td>{index+1}</td>
                             <td>{item.name}</td>
                             <td>{item.category}</td>
                             <td>{item.effect}</td>
@@ -28,8 +30,6 @@ const ItemTable = ({ items }) => {
                 })}
             </tbody>
         </table>
-
-
     )
 }
 

@@ -7,7 +7,8 @@ class PokemonCard extends Component {
     this.state = { favorite: false };
   }
 
-  toggleFavorite = () => {
+  toggleFavorite = (event) => {
+    event.preventDefault();
     const newFavorite = !this.state.favorite;
     this.setState({ favorite: newFavorite });
   };
@@ -18,18 +19,30 @@ class PokemonCard extends Component {
 
     return (
       <div className="pokemon-card">
+        <button className="like-btn" onClick={this.toggleFavorite}>
+          {favorite ? "❤️" : "🤍"}
+        </button>
         <div className="image-frame">
           <img alt={name} src={image} />
-          <button className="like-btn" onClick={this.toggleFavorite}>
-             {favorite ? "❤️" : "🤍"}
-          </button>
         </div>
-        
-        <h2>{name}</h2>
-        <p>Typ: {type}</p>
-        <p>Größe: {height}</p>
-        <p>Gewicht: {weight}</p>
-        <p>XP: {xp}</p>
+
+        <h2 className="pokemon-name">{name}</h2>
+        <span className="pokemon-type">{type}</span>
+
+        <div className="pokemon-stats">
+          <div className="stat">
+            <span className="stat-value">{height}</span>
+            <span className="stat-label">Größe</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{weight}</span>
+            <span className="stat-label">Gewicht</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{xp}</span>
+            <span className="stat-label">XP</span>
+          </div>
+        </div>
       </div>
     );
   }

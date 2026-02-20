@@ -135,9 +135,11 @@ class Index extends Component {
     return (
       <div>
         <h1>Pokedex</h1>
-
-        <Link to="/items" className="nav-link">Zur Items-Übersicht</Link>
-        
+        <div style={{ marginBottom: "20px" }}>
+        <Link to="/items">
+        <button className="nav-link">Zur Items-Übersicht</button>
+        </Link>
+        </div>
         <div className="search-container">
           <input
             className="search"
